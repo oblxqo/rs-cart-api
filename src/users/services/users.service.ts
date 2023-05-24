@@ -1,28 +1,40 @@
-import { Injectable } from '@nestjs/common';
-
-import { v4 } from 'uuid';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { User } from '../models';
+import { CREATE_USER_QUERY, GET_USER_BY_ID, GET_USER_LIST } from '../../db/pg/queries/cart-queries';
+import { PG_CONNECTION } from '../../constants';
+import { RdsClientService } from '../../shared/modules/rds-db/services/rds-client-service';
 
 @Injectable()
 export class UsersService {
-  private readonly users: Record<string, User>;
 
-  constructor() {
-    this.users = {}
+  constructor(@Inject(PG_CONNECTION) private rds: RdsClientService) {
   }
 
-  findOne(userId: string): User {
-    return this.users[ userId ];
+  async findOne(userName: string): Promise<User> {
+    try {
+      const result = await this.rds.runQuery(GET_USER_BY_ID, [ userName ]);
+      return result.rows[0];
+    } catch (err) {
+      throw err;
+    }
   }
 
-  createOne({ name, password }: User): User {
-    const id = v4(v4());
-    const newUser = { id: name || id, name, password };
-
-    this.users[ id ] = newUser;
-
-    return newUser;
+  async createOne({ name, password }: User): Promise<User> {
+    try {
+      const result = await this.rds.runQuery(CREATE_USER_QUERY, [ name, password ]);
+      return result.rows[0];
+    } catch (err) {
+      throw err;
+    }
   }
 
+  async getUsers() {
+    try {
+      const result = await this.rds.runQuery(GET_USER_LIST);
+      return result.rows;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
