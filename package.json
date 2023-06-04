@@ -20,7 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "deploy": "nest build && sls deploy",
-    "start:dev-serverless": "nest build && npx serverless offline"
+    "start:dev-serverless": "nest build && npx serverless offline",
+    "deploy:eb": "eb deploy"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
