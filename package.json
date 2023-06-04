@@ -21,7 +21,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "deploy": "nest build && sls deploy",
     "start:dev-serverless": "nest build && npx serverless offline",
-    "deploy:eb": "eb deploy"
+    "deploy:eb": "eb deploy",
+    "docker:build": "docker build -f Dockerfile . -t rs-checkout-api"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
