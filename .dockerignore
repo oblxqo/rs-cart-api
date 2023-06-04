@@ -1,0 +1,10 @@
+# compiled output
+node_modules
+.serverless
+
+# Environment viriables
+.env
+
+# Auxiliary files
+serverless.ts
+README.md

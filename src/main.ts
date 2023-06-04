@@ -17,18 +17,23 @@ async function bootstrap() {
   });
   app.use(helmet());
 
-  await app.init()
+  // await app.init();
+  await app.listen(port);
 
 
-  const expressApp = app.getHttpAdapter().getInstance();
-  return serverlessExpress({app: expressApp});
+  // const expressApp = app.getHttpAdapter().getInstance();
+  // return serverlessExpress({app: expressApp});
 }
 
-export const handler: Handler = async (
-  event: any,
-  context: Context,
-  callback: Callback,
-) => {
-  server = server ?? (await bootstrap());
-  return server(event, context, callback);
-};
+bootstrap().then(() => {
+  console.log('App is running on %s port', port);
+});
+
+// export const handler: Handler = async (
+//   event: any,
+//   context: Context,
+//   callback: Callback,
+// ) => {
+//   server = server ?? (await bootstrap());
+//   return server(event, context, callback);
+// };
