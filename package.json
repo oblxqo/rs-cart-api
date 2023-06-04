@@ -22,7 +22,8 @@
     "deploy": "nest build && sls deploy",
     "start:dev-serverless": "nest build && npx serverless offline",
     "deploy:eb": "eb deploy",
-    "docker:build": "docker build -f Dockerfile . -t rs-checkout-api"
+    "docker:build": "docker build -f Dockerfile . -t rs-checkout-api",
+    "docker:run": "docker run --env-file=.env -p 8001:8000 rs-checkout-api"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
